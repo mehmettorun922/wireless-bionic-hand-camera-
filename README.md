@@ -19,6 +19,7 @@
 - [Donanım Bileşenleri](#donanım-bileşenleri)
 - [Elektronik Donanım ve Haberleşme](#elektronik-donanım-ve-haberleşme)
 - [Yazılım ve Kontrol Algoritması](#yazılım-ve-kontrol-algoritması)
+- [Kamera Tabanlı Bilgisayarlı Görü (Alternatif Yaklaşım)](#📹-kamera-tabanlı-bilgisayarlı-görü-ile-temassız-kontrol-alternatif-yaklaşım)
 - [Kurulum Rehberi](#kurulum-rehberi)
 - [Sistem Performansı](#sistem-performansı)
 - [Deneysel Sonuçlar](#deneysel-sonuçlar)
@@ -262,6 +263,116 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ---
 
+## 📹 Kamera Tabanlı Bilgisayarlı Görü ile Temassız Kontrol (Alternatif Yaklaşım)
+
+**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü
+
+### Genel Tanım
+
+Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanılarak Python tabanlı bir **temassız kontrol arayüzü** geliştirilmiştir.
+
+### Çalışma Prensibi
+
+Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalandırılmıştır.
+
+### Sistem Akışı
+
+```
+Web Kamerası (30 FPS)
+        ↓
+OpenCV Görüntü İşleme
+        ↓
+MediaPipe El Iskelet Algılama (21 referans noktası)
+        ↓
+Parmak Mesafe Oranları Hesaplama
+        ↓
+Dinamik Kalibrasyonu (Smoothing 20 Hz)
+        ↓
+ESP32'ye Veri Gönderimi
+        ↓
+Servo Motor Kontrol
+```
+
+### Kalibrasyon Süreci
+
+1. **Tam Açık El Pozisyonu:** 5 saniye ölçüm
+2. **Tam Yumruk Pozisyonu:** 5 saniye ölçüm
+3. **Min-Max Değer Belirleme:** Her parmak için
+4. **Sistem Optimizasyonu:** Kullanıcıya özel ayarlar
+
+### Filtreleme ve Stabilizasyon
+
+- **Hareketli Ortalama Penceresi:** 20 Hz
+- **Amaç:** Parmak titremelerinden kaynaklanan servo gürültülerini engelleme
+- **Sonuç:** Düşük latencyli, stabil kontrol sinyalleri
+
+### Avantajları
+
+| Avantaj | Açıklama |
+|---------|----------|
+| **Temassız Kontrol** | Eldiven veya sensör takısına gerek yok |
+| **Hareket Özgürlüğü** | Hiçbir kısıtlama veya deformasyon sorunu |
+| **Kullanıcı Dostu** | Basit kalibrasyonu, hızlı öğrenme |
+| **Esnek** | Farklı ortamlarda (ev, hastane vb.) kullanılabilir |
+| **Maliyet Etkin** | Sadece bir web kamerası gerekli |
+
+### Teknik Detaylar
+
+**Kütüphaneler:**
+```python
+import cv2                    # Görüntü işleme
+import mediapipe.solutions   # El iskelet algılama
+import numpy                 # Matematik işlemleri
+```
+
+**El İskelet Yapısı:**
+- 21 referans noktası (landmarks)
+- Parmak tabanları, orta noktaları ve uçları
+- El merkezinde konumlandırılan nokta
+
+**Veri İletişimi:**
+- Python arayüzü → ESP32 (TCP/IP veya Serial)
+- Gerçek zamanlı komut gönderimi
+- ~30 ms gecikme
+
+### Performans Metrikleri
+
+| Metrik | Değer |
+|--------|-------|
+| Kare Hızı (FPS) | ~30 |
+| Algılama Doğruluğu | >95% |
+| Sistem Gecikme | ~50-80 ms |
+| Kalibrasyonu Süresi | ~10 saniye |
+| Işık Duyarlılığı | Düşük-Orta ışıklı ortamlarda çalışır |
+
+### Uygulanabilirlik
+
+**Ideal Kullanım Alanları:**
+- Terapötik rehabilitasyon
+- Ev ortamında kullanım
+- Oyun ve eğlence
+- Sanat ve yaratıcı uygulamalar
+
+**Sınırlamalar:**
+- Kamera görüş alanına bağımlı
+- Işık koşullarına duyarlı
+- Bilgisayar veya mobil cihaz gerekli
+- Web kamerası maliyeti
+
+### Sensör vs Kamera Karşılaştırması
+
+| Özellikleri | Flex Sensör | Kamera (MediaPipe) |
+|-----------|-------------|------------------|
+| **Temassız** | Hayır | Evet |
+| **Hareket Özgürlüğü** | Sınırlı | Tam |
+| **Doğruluk** | %93 | >%95 |
+| **Öğrenme Süresi** | ~5 dk | <10 sn |
+| **Kurulum Karmaşıklığı** | Orta | Düşük |
+| **Taşınabilirlik** | Yüksek | Orta |
+| **Maliyet** | Düşük | Orta |
+
+---
+
 ## 📦 Kurulum Rehberi
 
 ### Gereksinimler
@@ -454,6 +565,9 @@ Bionic_Hand_Project/
 │   ├── calibration_tool.py             # Kalibrasyonu aracı
 │   ├── monitor.py                      # Sistem izleme
 │   ├── config.json                     # Konfigürasyon
+│   ├── camera_control.py               # Kamera tabanlı kontrol
+│   ├── mediapipe_calibration.py        # MediaPipe kalibrasyonu
+│   ├── hand_gesture_recognition.py     # El hareket tanıma
 │   └── dashboard/                      # Web arayüzü
 │       ├── index.html
 │       ├── styles.css
@@ -575,7 +689,219 @@ Açık kaynaklı bu proje için katkılarınız beklenmektedir:
 
 ---
 
-## 🙏 Teşekkürler
+## 💻 Örnek Kodlar
+
+### 1. Flex Sensör Temel Okuması (Arduino Nano)
+
+```cpp
+#define FLEX_PIN A0
+#define SENSOR_MIN 150  // Kapalı el
+#define SENSOR_MAX 900  // Açık el
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(FLEX_PIN, INPUT);
+}
+
+void loop() {
+  int sensorValue = analogRead(FLEX_PIN);
+  
+  // Normalizasyon (0-180 derece)
+  int angle = map(sensorValue, SENSOR_MIN, SENSOR_MAX, 0, 180);
+  angle = constrain(angle, 0, 180);
+  
+  Serial.print("Sensör: ");
+  Serial.print(sensorValue);
+  Serial.print(" -> Açı: ");
+  Serial.println(angle);
+  
+  delay(20);  // 50 Hz
+}
+```
+
+### 2. Servo Motor Kontrolü (ESP32)
+
+```cpp
+#include <Servo.h>
+
+Servo myServo;
+int servoPin = 25;
+
+void setup() {
+  Serial.begin(9600);
+  myServo.attach(servoPin);
+  myServo.write(90);  // Merkez pozisyon
+}
+
+void loop() {
+  if (Serial.available()) {
+    int angle = Serial.parseInt();
+    if (angle >= 0 && angle <= 180) {
+      myServo.write(angle);
+      Serial.print("Motor açısı: ");
+      Serial.println(angle);
+    }
+  }
+}
+```
+
+### 3. Python Kamera Kontrol Kodu (MediaPipe)
+
+```python
+import cv2
+import mediapipe as mp
+import numpy as np
+from collections import deque
+
+# MediaPipe El Algılaması
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(
+    static_image_mode=False,
+    max_num_hands=1,
+    min_detection_confidence=0.7
+)
+
+# Kalibrasyonu değerleri
+calibration_data = {
+    'min_distances': [0] * 5,
+    'max_distances': [1] * 5
+}
+
+# Filtreleme penceresi
+filter_window = deque(maxlen=20)
+
+def get_finger_distances(landmarks):
+    """Parmaklar arası mesafeleri hesapla"""
+    distances = []
+    
+    # Her parmak için (index, middle, ring, pinky, thumb)
+    finger_tips = [8, 12, 16, 20, 4]
+    finger_bases = [5, 9, 13, 17, 2]
+    
+    for tip, base in zip(finger_tips, finger_bases):
+        tip_point = landmarks[tip]
+        base_point = landmarks[base]
+        
+        distance = np.sqrt(
+            (tip_point.x - base_point.x)**2 + 
+            (tip_point.y - base_point.y)**2
+        )
+        distances.append(distance)
+    
+    return distances
+
+def calibrate():
+    """Sistem Kalibrasyonu"""
+    print("Tam AÇIK el pozisyonunu 5 saniye boyunca sabit tutun...")
+    open_distances = []
+    
+    for i in range(150):  # 30 FPS * 5 sec
+        ret, frame = cap.read()
+        results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        
+        if results.multi_hand_landmarks:
+            landmarks = results.multi_hand_landmarks[0].landmark
+            distances = get_finger_distances(landmarks)
+            open_distances.append(distances)
+    
+    print("Tam KAPAL el pozisyonunu 5 saniye boyunca sabit tutun...")
+    closed_distances = []
+    
+    for i in range(150):
+        ret, frame = cap.read()
+        results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        
+        if results.multi_hand_landmarks:
+            landmarks = results.multi_hand_landmarks[0].landmark
+            distances = get_finger_distances(landmarks)
+            closed_distances.append(distances)
+    
+    # Min-Max değerleri kaydet
+    open_array = np.array(open_distances)
+    closed_array = np.array(closed_distances)
+    
+    calibration_data['max_distances'] = open_array.max(axis=0)
+    calibration_data['min_distances'] = closed_array.min(axis=0)
+    
+    print("Kalibrasyonu tamamlandı!")
+
+def normalize_to_angle(distances):
+    """Mesafeleri servo açısına dönüştür"""
+    angles = []
+    
+    for i, distance in enumerate(distances):
+        min_dist = calibration_data['min_distances'][i]
+        max_dist = calibration_data['max_distances'][i]
+        
+        # Normalizasyon
+        normalized = (distance - min_dist) / (max_dist - min_dist)
+        normalized = np.clip(normalized, 0, 1)
+        
+        # Servo açısı (0-180)
+        angle = int(normalized * 180)
+        angles.append(angle)
+    
+    return angles
+
+# Web Kamerasını Aç
+cap = cv2.VideoCapture(0)
+
+# Kalibrasyonu Yap
+calibrate()
+
+# Ana Loop
+print("Sistem başladı. ESC tuşu ile çık.")
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    # El algıla
+    results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    
+    if results.multi_hand_landmarks:
+        landmarks = results.multi_hand_landmarks[0].landmark
+        
+        # Parmak mesafeleri
+        distances = get_finger_distances(landmarks)
+        
+        # Servo açılarına dönüştür
+        angles = normalize_to_angle(distances)
+        
+        # Filtreleme (smoothing)
+        filter_window.append(angles)
+        
+        if len(filter_window) == 20:
+            filtered_angles = np.mean(list(filter_window), axis=0)
+            filtered_angles = filtered_angles.astype(int)
+            
+            # Servo motor komutlarını gönder
+            command = f"{filtered_angles[0]},{filtered_angles[1]},{filtered_angles[2]},{filtered_angles[3]},{filtered_angles[4]}\n"
+            # serial_port.write(command.encode())  # ESP32'ye gönder
+            
+            print(f"Parmak açıları: {filtered_angles}")
+        
+        # El iskeletini çiz
+        mp.solutions.drawing_utils.draw_landmarks(
+            frame, 
+            results.multi_hand_landmarks[0],
+            mp_hands.HAND_CONNECTIONS
+        )
+    
+    # Ekranda göster
+    cv2.imshow('Biyonik El Kontrol', frame)
+    
+    # ESC tuşu ile çık
+    if cv2.waitKey(1) & 0xFF == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+hands.close()
+```
+
+---
 
 Bu projenin başarılı şekilde gerçekleştirilmesinde:
 
