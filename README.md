@@ -32,7 +32,14 @@
 
 ## 📝 Özet
 
-Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır. Geliştirilen sistemde, eldiven üzerine yerleştirilen flex sensörlerden elde edilen veriler Arduino Nano tarafından okunmakta ve kablosuz olarak ESP32 mikrodenetleyicisine aktarılmaktadır. ESP32, gelen sensör verilerini işleyerek servo motorlara gerekli komutları göndermekte ve böylece robotik elin parmak hareketleri gerçek zamanlı olarak kontrol edilmektedir. Mekanik yapı, tahta malzemeden el işçiliğiyle üretilmiş olup, parmak hareketleri misina ipleri aracılığıyla sağlanmaktadır.
+Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır. Geliştirilen sistem, 5 parmağın bağımsız hareket kontrolünü sağlayan Arduino Nano ve ESP32 tabanlı bir mimariye sahiptir.
+
+**Ana Katkılar:**
+- Düşük maliyetli (~$150-200) biyonik el tasarımı
+- Tamamen açık kaynaklı donanım ve yazılım
+- Misina mekanizmasına dayanan mekanik tasarım
+- Gerçek zamanlı kablosuz kontrol sistemi
+- Alternatif olarak kamera tabanlı bilgisayarlı görü yaklaşımı
 
 **Anahtar Kelimeler:** Arduino Nano, ESP32, Flex Sensör, İnsan-Makine Etkileşimi, Kablosuz Biyonik El, Misina Mekanizması, Servo Motor
 
@@ -42,7 +49,9 @@ Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel enge
 
 ### Motivasyon ve Problem
 
-Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır. Bu proje, erişilebilir ve açık kaynaklı bir çözüm sunarak:
+Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır. Bu proje, bu sorunları çözmek amacıyla geliştirilmiştir.
+
+### Çözüm Hedefleri
 
 - Maliyet engelleri ortadan kaldırma
 - Taşınabilir ve esnek bir yapı sağlama
@@ -269,11 +278,11 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ### Genel Tanım
 
-Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanılarak Python tabanlı bir **temassız kontrol arayüzü** geliştirilmiştir.
+Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanarak temassız kontrol sistemi geliştirilmiştir.
 
 ### Çalışma Prensibi
 
-Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalandırılmıştır.
+Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalanmakta ve gerçek zamanlı servo motor kontrolü sağlanmaktadır.
 
 ### Sistem Akışı
 
@@ -534,6 +543,24 @@ Bionic_Hand_Project/
 ├── README.md                           # Bu dosya
 ├── LICENSE                             # Lisans bilgisi
 │
+├── camera/                             # Kamera tabanlı kontrol
+│   ├── camera_control.py               # Kamera kontrol kodu
+│   ├── mediapipe_calibration.py        # MediaPipe kalibrasyonu
+│   ├── hand_gesture_recognition.py     # El hareket tanıma
+│   └── config.json                     # Konfigürasyon
+│
+├── images/                             # Proje görselleri
+│   ├── Şekil_3.1.png                  # Biyonik el ve mekanik yapı
+│   ├── Şekil_3.2.png                  # Servo motor yerleşimi
+│   ├── Şekil_3.3.png                  # Verici bağlantı şeması
+│   ├── Şekil_3.4.png                  # Verici ünitesi
+│   ├── Şekil_3.5.png                  # Alıcı bağlantı şeması
+│   ├── Şekil_3.6.png                  # ESP32 SPI haberleşme
+│   ├── Şekil_4.1.png                  # Bilgisayarlı görü arayüzü
+│   ├── Çizelge_3.1.png                # Bileşenler tablosu
+│   ├── Çizelge_3.2.png                # Performans gözlemleri
+│   └── Çizelge_3.3.png                # Karşılaştırmalı analiz
+│
 ├── firmware/                           # Mikrodenetleyici yazılımları
 │   ├── arduino_nano_firmware.ino       # Arduino Nano kodu
 │   ├── esp32_main_firmware.ino         # ESP32 kodu
@@ -543,17 +570,6 @@ Bionic_Hand_Project/
 │       └── motor_control.h             # Servo kontrol
 │
 ├── hardware/                           # Donanım şemaları
-│   ├── images/
-│   │   ├── Şekil_3.1.png              # Biyonik el ve mekanik yapı
-│   │   ├── Şekil_3.2.png              # Servo motor yerleşimi
-│   │   ├── Şekil_3.3.png              # Verici bağlantı şeması
-│   │   ├── Şekil_3.4.png              # Verici ünitesi
-│   │   ├── Şekil_3.5.png              # Alıcı bağlantı şeması
-│   │   ├── Şekil_3.6.png              # ESP32 SPI haberleşme
-│   │   ├── Şekil_4.1.png              # Bilgisayarlı görü arayüzü
-│   │   ├── Çizelge_3.1.png            # Bileşenler tablosu
-│   │   ├── Çizelge_3.2.png            # Performans gözlemleri
-│   │   └── Çizelge_3.3.png            # Karşılaştırmalı analiz
 │   ├── schematics/
 │   │   ├── transmitter_schematic.txt   # Verici şeması
 │   │   └── receiver_schematic.txt      # Alıcı şeması
@@ -564,10 +580,6 @@ Bionic_Hand_Project/
 ├── software/                           # Yardımcı yazılımlar
 │   ├── calibration_tool.py             # Kalibrasyonu aracı
 │   ├── monitor.py                      # Sistem izleme
-│   ├── config.json                     # Konfigürasyon
-│   ├── camera_control.py               # Kamera tabanlı kontrol
-│   ├── mediapipe_calibration.py        # MediaPipe kalibrasyonu
-│   ├── hand_gesture_recognition.py     # El hareket tanıma
 │   └── dashboard/                      # Web arayüzü
 │       ├── index.html
 │       ├── styles.css
