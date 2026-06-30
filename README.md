@@ -32,7 +32,7 @@
 
 ## 📝 Özet
 
-Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır. Geliştirilen sistemde, eldiven üzerine yerleştirilen flex sensörlerden elde edilen veriler Arduino Nano tarafından okunmakta ve kablosuz olarak ESP32 mikrodenetleyicisine aktarılmaktadır. ESP32, gelen sensör verilerini işleyerek servo motorlara gerekli komutları göndermekte ve böylece robotik elin parmak hareketleri gerçek zamanlı olarak kontrol edilmektedir. Mekanik yapı, tahta malzemeden el işçiliğiyle üretilmiş olup, parmak hareketleri misina ipleri aracılığıyla sağlanmaktadır.
+Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır.
 
 **Anahtar Kelimeler:** Arduino Nano, ESP32, Flex Sensör, İnsan-Makine Etkileşimi, Kablosuz Biyonik El, Misina Mekanizması, Servo Motor
 
@@ -42,12 +42,7 @@ Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel enge
 
 ### Motivasyon ve Problem
 
-Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır. Bu proje, erişilebilir ve açık kaynaklı bir çözüm sunarak:
-
-- Maliyet engelleri ortadan kaldırma
-- Taşınabilir ve esnek bir yapı sağlama
-- Gerçek zamanlı kontrol imkanı verme
-- Akademik araştırmalara temel oluşturma
+Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahiptir. Bu proje bu problemleri çözmek amacıyla geliştirilmiştir.
 
 ### Hedefler
 
@@ -85,7 +80,11 @@ Sistem üç temel katmandan oluşmaktadır:
 
 Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlenerek geliştirilmiştir.
 
-**Bkz:** `images/Şekil_3.1.png` - Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri
+### Şekil 3.1: Alıcı Ünitesi - Ahşap Biyonik El ve Kılavuz Halka Mekanizması
+
+![Şekil 3.1 - Biyonik El Yapısı](images/Şekil_3.1.png)
+
+*Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri*
 
 ### Tasarım Özellikleri:
 
@@ -110,7 +109,11 @@ Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlener
 
 Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve verimlilik sağlayacak şekilde tasarlanmıştır.
 
-**Bkz:** `images/Şekil_3.2.png` - MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü
+### Şekil 3.2: MG996R Servo Motor Yerleşimi
+
+![Şekil 3.2 - Servo Motor Yerleşimi](images/Şekil_3.2.png)
+
+*MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü*
 
 ### Motor Özellikleri:
 
@@ -134,9 +137,17 @@ Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve 
 
 ### Verici Ünitesi (Arduino Nano ve Flex Sensörler)
 
-**Bkz:** `images/Şekil_3.3.png` - Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması
+### Şekil 3.3: Arduino Nano Tabanlı Verici Bağlantı Şeması
 
-**Bkz:** `images/Şekil_3.4.png` - Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)
+![Şekil 3.3 - Verici Bağlantı Şeması](images/Şekil_3.3.png)
+
+*Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması*
+
+### Şekil 3.4: Verici Birimi
+
+![Şekil 3.4 - Verici Birimi](images/Şekil_3.4.png)
+
+*Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)*
 
 #### Kullanılan Bileşenler:
 
@@ -168,9 +179,17 @@ GND:    Ortak Toprak
 
 ### Alıcı Ünitesi (ESP32 ve Servo Motorlar)
 
-**Bkz:** `images/Şekil_3.5.png` - ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması
+### Şekil 3.5: ESP32 Tabanlı Alıcı Bağlantı Şeması
 
-**Bkz:** `images/Şekil_3.6.png` - ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu
+![Şekil 3.5 - Alıcı Bağlantı Şeması](images/Şekil_3.5.png)
+
+*ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması*
+
+### Şekil 3.6: ESP32 SPI Haberleşme ve Alıcı Birimi
+
+![Şekil 3.6 - ESP32 SPI Haberleşme](images/Şekil_3.6.png)
+
+*ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu*
 
 #### Kullanılan Bileşenler:
 
@@ -265,15 +284,19 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ## 📹 Kamera Tabanlı Bilgisayarlı Görü ile Temassız Kontrol (Alternatif Yaklaşım)
 
-**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü
+### Şekil 4.1: Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü
+
+![Şekil 4.1 - Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
+
+*Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü*
 
 ### Genel Tanım
 
-Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanılarak Python tabanlı bir **temassız kontrol arayüzü** geliştirilmiştir.
+Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanılmış temassız el kontrol sistemi geliştirilmiştir.
 
 ### Çalışma Prensibi
 
-Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalandırılmıştır.
+Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalandırılmaktadır.
 
 ### Sistem Akışı
 
@@ -414,10 +437,10 @@ import numpy                 # Matematik işlemleri
 
 ### Adım 2: Donanım Kurulumu
 
-Detaylı bağlantı şemaları için bkz:
-- `images/Şekil_3.3.png` (Verici bağlantısı)
-- `images/Şekil_3.5.png` (Alıcı bağlantısı)
-- `images/Şekil_3.6.png` (SPI haberleşme)
+Detaylı bağlantı şemaları için bakınız:
+- ![Şekil 3.3](images/Şekil_3.3.png) - Verici bağlantısı
+- ![Şekil 3.5](images/Şekil_3.5.png) - Alıcı bağlantısı
+- ![Şekil 3.6](images/Şekil_3.6.png) - SPI haberleşme
 
 ### Adım 3: Firmware Yükleme
 
@@ -448,7 +471,11 @@ Detaylı bağlantı şemaları için bkz:
 
 ## 📊 Sistem Performansı
 
-**Bkz:** `images/Çizelge_3.2.png` - Sistem Performans Gözlemleri
+### Çizelge 3.2: Sistem Performans Gözlemleri
+
+![Çizelge 3.2 - Performans Gözlemleri](images/Çizelge_3.2.png)
+
+*Sistem Performans Gözlemleri*
 
 ### Temel Performans Metrikleri
 
@@ -473,7 +500,9 @@ Detaylı bağlantı şemaları için bkz:
 
 ### Kontrol ve Tepki Analizi
 
-**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü (Alternatif Yaklaşım)
+![Şekil 4.1 - Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
+
+*Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü (Alternatif Yaklaşım)*
 
 ### Deneysel Veriler
 
@@ -504,7 +533,11 @@ Detaylı bağlantı şemaları için bkz:
 
 ## 📈 Karşılaştırmalı Analiz
 
-**Bkz:** `images/Çizelge_3.3.png` - Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması
+### Çizelge 3.3: Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması
+
+![Çizelge 3.3 - Karşılaştırmalı Analiz](images/Çizelge_3.3.png)
+
+*Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması*
 
 ### Sistem Avantajları
 
