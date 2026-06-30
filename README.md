@@ -32,7 +32,7 @@
 
 ## 📝 Özet
 
-Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır. Geliştirilen sistem, 5 parmağın bağımsız hareket kontrolünü sağlayan Arduino Nano ve ESP32 tabanlı bir mimariye sahiptir.
+Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır.
 
 **Ana Katkılar:**
 - Düşük maliyetli (~$150-200) biyonik el tasarımı
@@ -49,7 +49,7 @@ Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel enge
 
 ### Motivasyon ve Problem
 
-Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır. Bu proje, bu sorunları çözmek amacıyla geliştirilmiştir.
+Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır.
 
 ### Çözüm Hedefleri
 
@@ -94,8 +94,11 @@ Sistem üç temel katmandan oluşmaktadır:
 
 Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlenerek geliştirilmiştir.
 
-![Şekil 3.1 - Alıcı Ünitesi Mekanik Yapı](images/Şekil_3.1.png)
-*Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri*
+<div align="center">
+  <img src="images/Şekil_3.1.png" alt="Şekil 3.1 - Alıcı Ünitesi Mekanik Yapı" width="600">
+  
+  *Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri*
+</div>
 
 ### Tasarım Özellikleri:
 
@@ -120,8 +123,11 @@ Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlener
 
 Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve verimlilik sağlayacak şekilde tasarlanmıştır.
 
-![Şekil 3.2 - Servo Motor Yerleşimi](images/Şekil_3.2.png)
-*MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü*
+<div align="center">
+  <img src="images/Şekil_3.2.png" alt="Şekil 3.2 - Servo Motor Yerleşimi" width="600">
+  
+  *MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü*
+</div>
 
 ### Motor Özellikleri:
 
@@ -145,11 +151,17 @@ Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve 
 
 ### Verici Ünitesi (Arduino Nano ve Flex Sensörler)
 
-![Şekil 3.3 - Verici Bağlantı Şeması](images/Şekil_3.3.png)
-*Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması*
+<div align="center">
+  <img src="images/Şekil_3.3.png" alt="Şekil 3.3 - Verici Bağlantı Şeması" width="550">
+  
+  *Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması*
+</div>
 
-![Şekil 3.4 - Verici Ünitesi](images/Şekil_3.4.png)
-*Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)*
+<div align="center">
+  <img src="images/Şekil_3.4.png" alt="Şekil 3.4 - Verici Ünitesi" width="500">
+  
+  *Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)*
+</div>
 
 #### Kullanılan Bileşenler:
 
@@ -181,11 +193,17 @@ GND:    Ortak Toprak
 
 ### Alıcı Ünitesi (ESP32 ve Servo Motorlar)
 
-![Şekil 3.5 - Alıcı Bağlantı Şeması](images/Şekil_3.5.png)
-*ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması*
+<div align="center">
+  <img src="images/Şekil_3.5.png" alt="Şekil 3.5 - Alıcı Bağlantı Şeması" width="550">
+  
+  *ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması*
+</div>
 
-![Şekil 3.6 - ESP32 SPI Haberleşme](images/Şekil_3.6.png)
-*ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu*
+<div align="center">
+  <img src="images/Şekil_3.6.png" alt="Şekil 3.6 - ESP32 SPI Haberleşme" width="550">
+  
+  *ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu*
+</div>
 
 #### Kullanılan Bileşenler:
 
@@ -280,16 +298,19 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ## 📹 Kamera Tabanlı Bilgisayarlı Görü ile Temassız Kontrol (Alternatif Yaklaşım)
 
-![Şekil 4.1 - Python Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
-*Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü*
+<div align="center">
+  <img src="images/Şekil_4.1.png" alt="Şekil 4.1 - Python Bilgisayarlı Görü Arayüzü" width="650">
+  
+  *Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü*
+</div>
 
 ### Genel Tanım
 
-Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanarak temassız kontrol sistemi geliştirilmiştir.
+Bu çalışmada, giyilebilir sensörlerin oluşturabileceği hareket kısıtlamalarını ve deformasyon sorunlarını ortadan kaldırmak amacıyla, **OpenCV ve MediaPipe** kütüphaneleri kullanılmıştır.
 
 ### Çalışma Prensibi
 
-Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalanmakta ve gerçek zamanlı servo motor kontrolü sağlanmaktadır.
+Standart bir web kamerası üzerinden **saniyede ~30 kare (FPS)** işlenerek kullanıcının el iskelet yapısı (21 farklı referans noktası) **üç boyutlu düzlemde** anlık olarak haritalanmaktadır.
 
 ### Sistem Akışı
 
@@ -464,8 +485,11 @@ Detaylı bağlantı şemaları için bkz:
 
 ## 📊 Sistem Performansı
 
-![Çizelge 3.2 - Sistem Performans Gözlemleri](images/Çizelge_3.2.png)
-*Sistem Performans Gözlemleri*
+<div align="center">
+  <img src="images/Çizelge_3.2.png" alt="Çizelge 3.2 - Sistem Performans Gözlemleri" width="550">
+  
+  *Sistem Performans Gözlemleri*
+</div>
 
 ### Temel Performans Metrikleri
 
@@ -521,8 +545,11 @@ Geliştirilen sistem kapsamlı testlerden geçirilmiştir ve başarılı sonuçl
 
 ## 📈 Karşılaştırmalı Analiz
 
-![Çizelge 3.3 - Sistem Karşılaştırması](images/Çizelge_3.3.png)
-*Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması*
+<div align="center">
+  <img src="images/Çizelge_3.3.png" alt="Çizelge 3.3 - Sistem Karşılaştırması" width="550">
+  
+  *Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması*
+</div>
 
 ### Sistem Avantajları
 
