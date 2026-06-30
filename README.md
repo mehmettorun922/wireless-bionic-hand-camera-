@@ -1,211 +1,264 @@
-# 🦾 Kablosuz Hareket Algılama Tabanlı Biyonik El Sistemi
+# Kablosuz Hareket Algılama Tabanlı Biyonik El: Sensör Destekli Gerçek Zamanlı Kontrol Mekanizması
 
-**Sensör Destekli Gerçek Zamanlı Kontrol Mekanizması**
+**Wireless Motion Detection Based Bionic Hand: Sensor-Assisted Real-Time Control Mechanism**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Language: C++](https://img.shields.io/badge/Language-C++-blue.svg)](https://cplusplus.com/)
 [![Arduino](https://img.shields.io/badge/Platform-Arduino-blue.svg)](https://www.arduino.cc/)
 [![ESP32](https://img.shields.io/badge/Microcontroller-ESP32-black.svg)](https://www.espressif.com/)
+[![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen.svg)](#)
 
 ---
 
 ## 📋 İçindekiler
 
+- [Özet](#özet)
 - [Proje Hakkında](#proje-hakkında)
-- [Özellikler](#özellikler)
-- [Sistem Mimarisi](#sistem-mimarisi)
+- [Sistem Tasarımı](#sistem-tasarımı)
+- [Mekanik Yapı ve Balıkçılıktan Esinlenilen Tasarım](#mekanik-yapı-ve-balıkçılıktan-esinlenilen-tasarım)
+- [Servo Motor Yerleşimi](#servo-motor-yerleşimi)
 - [Donanım Bileşenleri](#donanım-bileşenleri)
-- [Yazılım Mimarisi](#yazılım-mimarisi)
+- [Elektronik Donanım ve Haberleşme](#elektronik-donanım-ve-haberleşme)
+- [Yazılım ve Kontrol Algoritması](#yazılım-ve-kontrol-algoritması)
 - [Kurulum Rehberi](#kurulum-rehberi)
-- [Kullanım Kılavuzu](#kullanım-kılavuzu)
-- [Mekanik Tasarım](#mekanik-tasarım)
-- [Test & Sonuçlar](#test--sonuçlar)
+- [Sistem Performansı](#sistem-performansı)
+- [Deneysel Sonuçlar](#deneysel-sonuçlar)
+- [Karşılaştırmalı Analiz](#karşılaştırmalı-analiz)
+- [Proje Yapısı](#proje-yapısı)
+- [Sorun Giderme](#sorun-giderme)
 - [Katkılar](#katkılar)
-- [Lisans](#lisans)
+
+---
+
+## 📝 Özet
+
+Bu çalışma, kablosuz hareket algılama teknolojisini kullanarak fiziksel engelli bireyler için düşük maliyetli ve taşınabilir bir biyonik el sistemi geliştirmeyi amaçlamaktadır. Geliştirilen sistemde, eldiven üzerine yerleştirilen flex sensörlerden elde edilen veriler Arduino Nano tarafından okunmakta ve kablosuz olarak ESP32 mikrodenetleyicisine aktarılmaktadır. ESP32, gelen sensör verilerini işleyerek servo motorlara gerekli komutları göndermekte ve böylece robotik elin parmak hareketleri gerçek zamanlı olarak kontrol edilmektedir. Mekanik yapı, tahta malzemeden el işçiliğiyle üretilmiş olup, parmak hareketleri misina ipleri aracılığıyla sağlanmaktadır.
+
+**Anahtar Kelimeler:** Arduino Nano, ESP32, Flex Sensör, İnsan-Makine Etkileşimi, Kablosuz Biyonik El, Misina Mekanizması, Servo Motor
 
 ---
 
 ## 🎯 Proje Hakkında
 
-Bu çalışma, **kablosuz hareket algılama teknolojisini** kullanarak fiziksel engelli bireyler için **düşük maliyetli** ve **taşınabilir** bir biyonik el sistemi geliştirmeyi amaçlamaktadır.
+### Motivasyon ve Problem
 
-### Problem Tanımı
+Geleneksel protez sistemleri çoğunlukla yüksek maliyetli, kablolu ve sınırlı işlevselliğe sahip olduğundan, kullanıcıların hareket kabiliyetini ve ergonomik kullanımını kısıtlamaktadır. Bu proje, erişilebilir ve açık kaynaklı bir çözüm sunarak:
 
-Geleneksel protez sistemleri:
-- ❌ Yüksek maliyetli
-- ❌ Kablolu (sınırlı hareket kabiliyeti)
-- ❌ Karmaşık kurulum
-- ❌ Düşük erişilebilirlik
+- Maliyet engelleri ortadan kaldırma
+- Taşınabilir ve esnek bir yapı sağlama
+- Gerçek zamanlı kontrol imkanı verme
+- Akademik araştırmalara temel oluşturma
 
-### Çözüm
+### Hedefler
 
-Bu proje, açık kaynaklı bir referans sistemi olarak:
-- ✅ Ekonomik bir tasarım sunuyor
-- ✅ Tamamen kablosuz haberleşme sağlıyor
-- ✅ Gerçek zamanlı kontrol yapabiliyor
-- ✅ Akademik araştırmalarda ve rehabilitasyon süreçlerinde kullanılabiliyor
+- ✅ Düşük maliyetli biyonik el tasarımı ve gerçekleştirme
+- ✅ Kablosuz haberleşme altyapısı kurma
+- ✅ Sensör veri işleme ve kontrol algoritması geliştirme
+- ✅ 5 parmak bağımsız hareket kontrolü
+- ✅ Gerçek zamanlı yanıt süresi (<150ms)
+- ✅ Açık kaynaklı referans sistemi oluşturma
 
 ---
 
-## ✨ Özellikler
+## 🏗️ Sistem Tasarımı
 
-### Teknolojik Özellikler
+Sistem üç temel katmandan oluşmaktadır:
 
-| Özellik | Detay |
+### 1. Sensör Katmanı (Verici Tarafı)
+- Eldiven üzerine yerleştirilen 5 adet flex sensör
+- Arduino Nano tarafından analog veri okuması
+- Gerilim bölücü devreler (10 kΩ dirençler)
+
+### 2. İşlem ve Haberleşme Katmanı
+- ESP32 mikrodenetleyicisi
+- nRF24L01 kablosuz modülü
+- Veri işleme algoritmaları
+
+### 3. Hareket Kontrol Katmanı (Alıcı Tarafı)
+- 5 adet servo motor (MG996R)
+- PWM kontrol sinyalleri
+- Tahta biyonik el mekanik yapısı
+
+---
+
+## 🔧 Mekanik Yapı ve Balıkçılıktan Esinlenilen Tasarım
+
+Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlenerek geliştirilmiştir.
+
+**Bkz:** `images/Şekil_3.1.png` - Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri
+
+### Tasarım Özellikleri:
+
+- **Gövde Malzemesi:** Tahta (Uygun maliyetli ve dayanıklı)
+- **Hareket Mekanizması:** Misina ipi tabanlı tendon sistemi
+- **Parmak Yapısı:** El işçiliğiyle oluşturulmuş, doğal hareket yeteneği
+- **Yapısal Avantajlar:**
+  - Düşük maliyet
+  - Yüksek dayanıklılık
+  - Kolay onarım ve bakım
+  - Doğal el hareketi taklit etme
+
+### Çalışma Prensibi:
+
+1. Servo motor döndürüldüğünde misina ipi gerginleşir
+2. Gerginleşen iş, parmağı yukarı doğru çeker
+3. Motor geri döndüğünde parmak doğal olarak aşağı iner
+
+---
+
+## ⚙️ Servo Motor Yerleşimi
+
+Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve verimlilik sağlayacak şekilde tasarlanmıştır.
+
+**Bkz:** `images/Şekil_3.2.png` - MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü
+
+### Motor Özellikleri:
+
+| Özellik | Değer |
 |---------|-------|
-| **İletişim** | Kablosuz (Wi-Fi) |
-| **Yanıt Süresi** | Gerçek zamanlı |
-| **Enerji Tüketimi** | Düşük |
-| **Maliyet** | Ekonomik |
-| **Kurulum** | Basit ve Hızlı |
-| **Bakım** | Kolay |
-| **Açık Kaynak** | Evet |
+| Motor Modeli | MG996R |
+| Torque | 10 kg/cm |
+| Hız | 0.20s/60° |
+| Çalışma Voltajı | 4.8-6V |
+| Kontrolü | PWM Sinyali |
 
-### Fonksiyonel Özellikler
+### Yerleşim Düzeni:
 
-- 🎯 **5 Parmak Kontrolü** - Her parmak bağımsız hareket
-- 📊 **Gerçek Zamanlı Sensör Okuması** - Flex sensörlerden anlık veri
-- 🎮 **İnsan-Makine Etkileşimi** - Doğal el hareketleri taklit etme
-- 📱 **Kablosuz Kontrol** - WiFi tabanlı haberleşme
-- 🔧 **Modüler Tasarım** - Kolayca genişletilebilir sistem
+- 5 adet servo motor sırayla konumlandırıldı
+- Her motor, bir parmağın hareketini kontrol ediyor
+- Merkezi kontrol plakası sistemin yapısal stabilitesini sağlıyor
 
 ---
 
-## 🏗️ Sistem Mimarisi
+## 🔌 Donanım Bileşenleri
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  BIYONIK EL SİSTEMİ                     │
-└─────────────────────────────────────────────────────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        │                 │                 │
-   ┌────▼────┐      ┌────▼────┐      ┌────▼────┐
-   │   SENSÖR│      │ İŞLEMLE │      │ HAREKET │
-   │  KATMANI│      │ KATMANı │      │ KATMANI │
-   └────┬────┘      └────┬────┘      └────┬────┘
-        │                 │                 │
-   ┌────▼──────┐    ┌────▼────┐     ┌────▼────┐
-   │Flex       │    │Arduino  │     │Servo    │
-   │Sensörler  │◄──►│Nano     │◄───►│Motorlar │
-   │           │    │         │     │         │
-   └────┬──────┘    └────┬────┘     └────┬────┘
-        │                │                │
-        │          ┌─────▼────────────┐   │
-        │          │  Kablosuz        │   │
-        │          │  Haberleşme      │   │
-        │          │  (WiFi)          │   │
-        │          └──────┬───────────┘   │
-        │                 │               │
-        │          ┌──────▼─────────┐     │
-        │          │  ESP32         │     │
-        │          │  Mikrodenetley │     │
-        │          │  ici           │     │
-        │          └────────────────┘     │
-        │                                 │
-        └─────────────────┬───────────────┘
-                          │
-              ┌───────────▼──────────┐
-              │   MEKANİK YAPISI     │
-              │   - Tahta El         │
-              │   - Misina Mekanizmi │
-              │   - Parmak Yapıları  │
-              └──────────────────────┘
-```
+### Verici Ünitesi (Arduino Nano ve Flex Sensörler)
 
----
+**Bkz:** `images/Şekil_3.3.png` - Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması
 
-## 🔧 Donanım Bileşenleri
+**Bkz:** `images/Şekil_3.4.png` - Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)
 
-### Sensör Katmanı
-
-| Bileşen | Adet | Açıklama |
-|---------|------|----------|
-| Flex Sensör | 5 | Her parmak için 1 adet |
-| Direnç (10kΩ) | 5 | Pull-down dirençleri |
-| Kablolama | - | Eldiven entegrasyonu |
-
-### İşlem Katmanı
-
-| Bileşen | Özellikleri |
-|---------|-----------|
-| **Arduino Nano** | - 8-bit mikrodenetleyici<br>- 14 dijital I/O pin<br>- 8 analog girişi<br>- 16 MHz saat hızı |
-| **ESP32** | - 32-bit dual-core işlemci<br>- WiFi bağlantısı<br>- BLE desteği<br>- 34 GPIO pin |
-
-### Hareket Katmanı
+#### Kullanılan Bileşenler:
 
 | Bileşen | Adet | Detay |
 |---------|------|-------|
-| Servo Motor | 5 | Sürekli rotasyon servo |
-| Servo Driver | 1 | PWM kontrolü için |
-| Güç Kaynağı | 1 | 5V/2A adaptör |
+| Arduino Nano | 1 | 8-bit mikrodenetleyici, ATmega328P |
+| Flex Sensör | 5 | Her parmak için 1 adet |
+| Direnç 10kΩ | 5 | Pull-down devreleri |
+| nRF24L01 Modülü | 1 | 2.4GHz kablosuz haberleşme |
+| Kondansatör 10µF | 1 | Güç filtreleme |
+| Eldiven | 1 | Sensör entegrasyonu için |
 
-### Mekanik Yapı
+#### Bağlantı Pinleri (Arduino Nano):
 
-| Malzeme | Kullanım |
-|---------|----------|
-| Ahşap (Tahta) | El iskeletinin yapısı |
-| Misina İpi (Fishing Line) | Parmak hareket mekanizması |
-| Metal Bağlantılar | Yapısal entegrasyonu |
+```
+A0-A4: Flex Sensör Girişleri
+Pin 11: nRF24L01 MOSI (SPI)
+Pin 12: nRF24L01 MISO (SPI)
+Pin 13: nRF24L01 SCK (SPI)
+Pin 7:  nRF24L01 CE (Chip Enable)
+Pin 8:  nRF24L01 CSN (Chip Select)
+GND:    Ortak Toprak
+5V:     Güç Kaynağı
+```
 
 ---
 
-## 💻 Yazılım Mimarisi
+## 📡 Elektronik Donanım ve Haberleşme
 
-### Yazılım Katmanları
+### Alıcı Ünitesi (ESP32 ve Servo Motorlar)
+
+**Bkz:** `images/Şekil_3.5.png` - ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması
+
+**Bkz:** `images/Şekil_3.6.png` - ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu
+
+#### Kullanılan Bileşenler:
+
+| Bileşen | Adet | Detay |
+|---------|------|-------|
+| ESP32 | 1 | 32-bit dual-core, WiFi + BLE |
+| Servo Motor (MG996R) | 5 | Gerçek zamanlı kontrol |
+| nRF24L01 Modülü | 1 | Kablosuz alış veriş |
+| Güç Kaynağı | 1 | 5V / 2A minimum |
+| Kondansatör 100µF | 1 | Servo beslemesi filtreleme |
+
+#### Bağlantı Pinleri (ESP32):
 
 ```
-┌──────────────────────────────────────┐
-│         KULLANıCı ARAYÜZÜ            │ (Web/Mobile Dashboard)
-│  (WiFi üzerinden kontrol & İzleme)   │
-└────────────────┬─────────────────────┘
-                 │
-┌────────────────▼─────────────────────┐
-│      HABERLEŞME PROTOKOLÜ            │ (WiFi/TCP-IP)
-│  (Arduino Nano ◄──► ESP32)           │
-└────────────────┬─────────────────────┘
-                 │
-┌────────────────▼─────────────────────┐
-│        KONTROL YAZILIMI               │
-│  ┌─────────────────────────────────┐ │
-│  │ - Sensör Veri İşleme          │ │
-│  │ - Algoritma & Kalibrasyonu    │ │
-│  │ - Hata Kontrolü               │ │
-│  └─────────────────────────────────┘ │
-└────────────────┬─────────────────────┘
-                 │
-┌────────────────▼─────────────────────┐
-│      DONANIM SÜRÜCÜLERI              │
-│  ┌─────────────────────────────────┐ │
-│  │ - Sensör Okuması (ADC)        │ │
-│  │ - Servo Kontrol (PWM)         │ │
-│  │ - WiFi Modülü (I2C/UART)      │ │
-│  └─────────────────────────────────┘ │
-└────────────────┬─────────────────────┘
-                 │
-┌────────────────▼─────────────────────┐
-│      DONANIM BILEŞENLERI             │
-│  (Arduino, ESP32, Sensörler, Servolar)
-└──────────────────────────────────────┘
+GPIO 5:  nRF24L01 CE (Chip Enable)
+GPIO 4:  nRF24L01 CSN (Chip Select)
+GPIO 23: nRF24L01 MOSI (SPI)
+GPIO 19: nRF24L01 MISO (SPI)
+GPIO 18: nRF24L01 SCK (SPI)
+
+GPIO 25: Servo Motor 1 (PWM)
+GPIO 26: Servo Motor 2 (PWM)
+GPIO 27: Servo Motor 3 (PWM)
+GPIO 14: Servo Motor 4 (PWM)
+GPIO 12: Servo Motor 5 (PWM)
+
+GND:    Ortak Toprak
+VIN:    5V Güç Kaynağı
 ```
 
-### Yazılım Bileşenleri
+### Haberleşme Protokolü
 
-#### Arduino Nano Yazılımı
-- **Görev**: Flex sensörlerinden veri okuma
-- **Kod**: `arduino_nano_firmware.ino`
-- **Fonksiyonlar**:
-  - Analog sensör okuması
-  - Veri filtreleme
-  - Kablosuz haberleşeme
+**Kablosuz İletişim:** nRF24L01 + 2.4GHz RF Modülü
+- **Baud Rate:** 250 kbps, 1 Mbps, 2 Mbps (ayarlanabilir)
+- **Aralık:** ~100 meter (açık alanda)
+- **Gecikme:** 50-100 ms (toplam sistem gecikme)
 
-#### ESP32 Yazılımı
-- **Görev**: Veri işleme ve servo kontrol
-- **Kod**: `esp32_main_firmware.ino`
-- **Fonksiyonlar**:
-  - WiFi bağlantı yönetimi
-  - Veri alış-verişi
-  - PWM servo sürücü
+**Seri İletişim (UART):**
+- Arduino Nano ↔ ESP32
+- Baud Rate: 9600 bps
+- Veri Formatı: Başlık + Sensör Değerleri + CRC Kontrolü
+
+---
+
+## 💻 Yazılım ve Kontrol Algoritması
+
+### Yazılım Mimarisi
+
+Sistem iki ana yazılım bileşeninden oluşmaktadır:
+
+#### 1. Arduino Nano Firmware
+- **Görev:** Sensör veri okuma ve iletme
+- **Açıklama:** 
+  - Flex sensörlerden 50 Hz frekansta analog veri okur
+  - Verileri filtreleme işleminden geçirir
+  - nRF24L01 modülü üzerinden ESP32'ye iletir
+
+#### 2. ESP32 Firmware
+- **Görev:** Veri işleme ve servo kontrol
+- **Açıklama:**
+  - Arduino Nano'dan gelen verileri alır
+  - Sensör verileri ölçeklendirir ve kalibrasyonunu yapar
+  - Servo motorlara uygun PWM sinyalleri üretir
+  - Sistem durumunu izler ve hata yönetimi sağlar
+
+### Kontrol Algoritması
+
+```
+Giriş: Flex Sensör Değerleri (0-1023)
+     ↓
+1. Veri Filtreleme (Low-pass filter)
+     ↓
+2. Kalibrasyon Uygulaması
+   (Min-Max normalizasyon: 0-1023 → 0-180°)
+     ↓
+3. Servo Kontrol Sinyali Oluşturma
+   (PWM: 1000-2000 µs aralığı)
+     ↓
+4. Motor Kontrolü
+     ↓
+Çıkış: Parmak Hareketi
+```
+
+### Algoritma Detayları
+
+- **Sensör Okuması:** Her 20 ms'de (50 Hz)
+- **Veri Filtreleme:** Hareketli ortalama (5 örnek)
+- **Tepki Süresi:** ~100-150 ms (insan algısı sınırının altında)
+- **Hata Yönetimi:** CRC kontrol, veri doğrulaması
 
 ---
 
@@ -213,276 +266,152 @@ Bu proje, açık kaynaklı bir referans sistemi olarak:
 
 ### Gereksinimler
 
-```bash
-# Donanım Gereksinimleri
+**Yazılım:**
+- Arduino IDE v1.8.0 veya üzeri
+- USB Sürücüleri (Arduino Nano & ESP32 için)
+- Gerekli Kütüphaneler:
+  - RF24 (nRF24L01 modülü için)
+  - Servo (PWM servo kontrol için)
+
+**Donanım:**
 - Arduino Nano (1 adet)
 - ESP32 Geliştirme Kartı (1 adet)
 - Flex Sensörler (5 adet)
-- Servo Motorlar (5 adet)
+- Servo Motorlar MG996R (5 adet)
+- nRF24L01 Modülleri (2 adet)
 - 5V Güç Kaynağı (2A minimum)
-- USB Kablolar (Programlama için)
-- Eldiven
-- Tahta & Misina İpi
-
-# Yazılım Gereksinimleri
-- Arduino IDE v1.8.0 veya üzeri
-- ESP32 Board Package
-- Python 3.6+ (İsteğe bağlı - test araçları için)
-```
+- USB Kablolar
+- Tahta, Misina İpi, Metal Bağlantılar
 
 ### Adım 1: Yazılım Ortamı Kurulumu
 
 ```bash
-# 1.1 Arduino IDE'yi indir ve kur
+# 1.1 Arduino IDE'yi indir
 # https://www.arduino.cc/en/software
 
-# 1.2 ESP32 Board Package'ını ekle
-# Arduino IDE > Preferences > Additional Boards Manager URLs
+# 1.2 Board Package kurulumu
+# Arduino IDE > File > Preferences
+# Additional Boards Manager URLs'e ekle:
 # https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
-# 1.3 Gerekli kütüphaneleri yükle
+# 1.3 Gerekli Kütüphaneleri Yükle
 # Arduino IDE > Tools > Manage Libraries
 # Ara ve yükle:
-#   - WiFi (Built-in)
-#   - UART Communication Libraries
+# - RF24 by TMRh20
+# - Servo by Arduino
 ```
 
-### Adım 2: Donanım Montajı
+### Adım 2: Donanım Kurulumu
 
-```
-FLEX SENSÖRLER → ARDUINO NANO → ESP32 → SERVO MOTORLAR
-     (A0-A4)      (UART)     (PWM)
-```
-
-#### Bağlantı Şeması
-
-**Arduino Nano Pinleri:**
-```
-A0-A4 → Flex Sensör Girişleri
-TX    → ESP32 RX
-RX    → ESP32 TX
-GND   → Ortak GND
-```
-
-**ESP32 Pinleri:**
-```
-RX2   → Arduino Nano TX
-TX2   → Arduino Nano RX
-GPIO16-GPIO20 → Servo Motorları (PWM)
-VIN   → 5V Güç Kaynağı
-GND   → Ortak GND
-```
-
-**Servo Motorlar:**
-```
-Signal (PWM) → ESP32 GPIO Pins
-Power (+5V)  → Güç Kaynağı
-GND          → Ortak GND
-```
+Detaylı bağlantı şemaları için bkz:
+- `images/Şekil_3.3.png` (Verici bağlantısı)
+- `images/Şekil_3.5.png` (Alıcı bağlantısı)
+- `images/Şekil_3.6.png` (SPI haberleşme)
 
 ### Adım 3: Firmware Yükleme
 
 ```bash
-# 3.1 Arduino Nano Firmware'ini yükle
-# - arduino_nano_firmware.ino dosyasını aç
-# - Tools > Board > Arduino Nano seç
-# - Tools > Processor > ATmega328P (Old Bootloader) seç
-# - Tools > Port > Uygun COM portu seç
-# - Upload butonuna tıkla
+# Arduino Nano Firmware
+# 1. arduino_nano_firmware.ino dosyasını aç
+# 2. Tools > Board > Arduino Nano seçin
+# 3. Tools > Processor > ATmega328P seçin
+# 4. Upload butonuna tıklayın
 
-# 3.2 ESP32 Firmware'ini yükle
-# - esp32_main_firmware.ino dosyasını aç
-# - Tools > Board > ESP32 Dev Module seç
-# - Tools > Port > Uygun COM portu seç
-# - Upload butonuna tıkla
+# ESP32 Firmware
+# 1. esp32_main_firmware.ino dosyasını aç
+# 2. Tools > Board > ESP32 Dev Module seçin
+# 3. Upload butonuna tıklayın
 ```
 
-### Adım 4: Kalibrasyonu
+### Adım 4: Kalibrasyon ve Test
 
 ```bash
-# 4.1 Sensör Kalibrasyonu
-# - Her bir flex sensörün minimum ve maksimum değerlerini kaydet
-# - Kalibrasyonu yapılandırma dosyasına kaydet
-
-# 4.2 Servo Kalibrasyonu
-# - Her servo motorun 0°-180° açı aralığını ayarla
-# - Mekanik sınırları test et
-
-# 4.3 Sistem Testi
-# - Hareketleri bireysel olarak test et
-# - Yanıt sürelerini kontrol et
+# 1. Serial Monitor'u aç (9600 baud)
+# 2. Eldiveni giy ve sessiz durumda sensör değerlerini kaydet
+# 3. Tam açık el durumundaki sensör değerlerini kaydet
+# 4. Kalibrasyonu yapılandırma dosyasına kaydet
+# 5. Her bir servo motorun açı sınırlarını test et
 ```
 
 ---
 
-## 🎮 Kullanım Kılavuzu
+## 📊 Sistem Performansı
 
-### Başlangıç
+**Bkz:** `images/Çizelge_3.2.png` - Sistem Performans Gözlemleri
 
-```bash
-# 1. Sistemi Başlat
-# - ESP32 güç kaynağını bağla
-# - Arduino Nano'yu USB ile bağla
+### Temel Performans Metrikleri
 
-# 2. WiFi Bağlantısı
-# - Cihaz otomatik olarak Wi-Fi ağına bağlanacak
-# - LED göstergesi bağlantı durumunu gösterir
+| Metrik | Değer |
+|--------|-------|
+| Sensör Doğruluğu | >96% |
+| Sistem Tepki Süresi | 50-100 ms |
+| Kablosuz Aralığı | ~100 m (açık alan) |
+| Güç Tüketimi | ~1.5W (bekleme) / ~3W (aktif) |
+| Hareket Aralığı | 0° - 90° (parmak) |
+| İşletim Sıcaklığı | 0°C - 60°C |
 
-# 3. Sistemi Kullan
-# - Eldiveni giy
-# - El hareketlerini yap
-# - Biyonik el otomatik olarak taklit edecek
-```
+### İletişim Performansı
 
-### Temel İşlemler
-
-#### Sensör Okuması Kontrol Etme
-
-```cpp
-// Serial Monitor'da sensör değerlerini görüntüle
-// Arduino IDE > Tools > Serial Monitor
-// Baud Rate: 9600
-
-// Çıkış Örneği:
-// Parmak 1: 150
-// Parmak 2: 145
-// Parmak 3: 160
-// Parmak 4: 155
-// Parmak 5: 158
-```
-
-#### Manuel Servo Kontrolü
-
-```cpp
-// Belirli bir servoya manuel kontrol gönder
-// ESP32 Serial'e komut gönder: "SERVO_1:90"
-// 1-5: Parmak numarası
-// 0-180: Derece değeri
-```
-
-### Gelişmiş Kullanım
-
-#### WiFi Bağlantı Ayarları
-
-Web dashboard'dan bağlantı özelliklerini değiştirebilirsiniz:
-- SSID değişiklikleri
-- Güç ayarları
-- Tepki hızı konfigürasyonu
-
-#### Hata Ayıklama
-
-```bash
-# Serial Monitor'da debug mesajlarını göz
-# Bağlantı sorunları
-# Sensör okuma hataları
-# Servo hareket anomalileri
-```
+- **Seri Haberleşme (UART):** 9600 bps, güvenilir
+- **Kablosuz Haberleşme (RF24):** 2 Mbps, düşük gecikme
+- **Toplam Gecikme:** 50-100 ms (gerçek zamanlı kontrol için yeterli)
 
 ---
 
-## 🏗️ Mekanik Tasarım
+## 🧪 Deneysel Sonuçlar
 
-### El Yapısı
+### Kontrol ve Tepki Analizi
 
-```
-        ┌─────────────────────────────────┐
-        │     TAHTA EL YAPISI             │
-        │  (Handcrafted from Wood)        │
-        └─────────────────────────────────┘
-                    │
-        ┌───────────┼───────────┐
-        │           │           │
-    ┌───▼──┐   ┌───▼──┐   ┌───▼──┐
-    │Baş   │   │Orta  │   │İşaret│
-    │Parmak│   │Parmak│   │Parmak│
-    └───┬──┘   └───┬──┘   └───┬──┘
-        │          │          │
-        └────────┬─┴────┬─────┘
-                 │      │
-            ┌────▼──────▼────┐
-            │ MİSİNA MEKANİZMASI
-            │ (Tendon System)
-            └────────┬───────┘
-                     │
-            ┌────────▼────────┐
-            │ SERVO MOTOR HUP │
-            │ (5 Servo Motor) │
-            └─────────────────┘
-```
+**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü (Alternatif Yaklaşım)
 
-### Misina Mekanizması
+### Deneysel Veriler
 
-**Çalışma Prensibi:**
-1. Servo motor döner
-2. Misina ipi gerginleşir
-3. Parmak yukarı doğru hareket eder
-4. Servo geri döner → Parmak aşağı
-
-**Avantajlar:**
-- Düşük maliyet
-- Yüksek dayanıklılık
-- Kolay onarım
-- Doğal hareket
-
-### Mekanik Özellikler
-
-| Özellik | Değer |
-|---------|-------|
-| Hareket Aralığı | 0° - 90° |
-| Yanıt Süresi | ~200ms |
-| Güç Gereksinimleri | 5V / 2A |
-| Ağırlık | ~500g |
-
----
-
-## 🧪 Test & Sonuçlar
-
-### Performans Testleri
-
-#### 1. Sensör Doğruluğu Testi
-
-```
-Test Parametreleri:
-- Örnek Sayısı: 1000
+**Çalışma Koşulları:**
 - Ortam Sıcaklığı: 22°C
 - Nemlilik: 45%
+- WiFi Sinyali: -40 dBm
+- Test Süresi: 2 hafta
 
-Sonuçlar:
-├─ Ortalama Doğruluk: 96.5%
-├─ Standart Sapma: ±1.2%
-├─ Minimum: 94.8%
-└─ Maksimum: 98.3%
-```
+**Sonuçlar:**
 
-#### 2. Yanıt Süresi Testi
+| Test | Sonuç |
+|------|-------|
+| Sensör Doğruluk Testi (1000 örnek) | 96.5% ±1.2% |
+| Yanıt Süresi Testi | 145 ms (ortalama) |
+| Dayanıklılık Testi (500K+ hareket) | %0 arıza oranı |
+| Enerji Tüketimi | ~2W (ortalama) |
+| Kullanıcı Memnuniyeti (8 katılımcı) | %92 |
 
-```
-Test Koşulları:
-- WiFi Sinyali Gücü: -40dBm
-- Uzaklık: 5m
-
-Sonuçlar:
-├─ Ortalama Gecikme: 145ms
-├─ En Düşük: 120ms
-├─ En Yüksek: 180ms
-└─ 95% Güven Aralığı: 140-150ms
-```
-
-#### 3. Dayanıklılık Testi
-
-```
-Süre: 2 Hafta
-Toplam Hareket Sayısı: 500.000+
-Arıza: 0
-Performans Düşüşü: <1%
-```
-
-### Kullanıcı Testleri
+### Pilot Test Sonuçları
 
 - ✅ 8 katılımcı ile başarılı pilot test
-- ✅ %92 kullanıcı memnuniyeti
 - ✅ Ortalama öğrenme süresi: <5 dakika
-- ✅ Günlük 4+ saat kullanım süresi test edildi
+- ✅ Günlük kullanım kapasitesi: 4+ saat
+- ✅ Hiç ciddi arıza yaşanmadı
+
+---
+
+## 📈 Karşılaştırmalı Analiz
+
+**Bkz:** `images/Çizelge_3.3.png` - Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması
+
+### Sistem Avantajları
+
+| Özellik | Geleneksel Sistem | Bu Çalışma |
+|---------|------------------|-----------|
+| **Maliyet** | $2000-5000 | $150-200 |
+| **Haberleşme** | Kablolu | Kablosuz |
+| **Taşınabilirlik** | Sınırlı | Yüksek |
+| **Öğrenme Süresi** | Günler | <5 Dakika |
+| **Bakım Kolaylığı** | Zor | Kolay |
+| **Açık Kaynak** | Hayır | Evet |
+
+### Tasarım Özellikleri
+
+1. **Misina Tabanlı Mekanik:** El işçiliğiyle üretilebilen, düşük maliyetli yapı
+2. **Kablosuz Kontrol:** Kullanıcı hareket özgürlüğü
+3. **Modüler Tasarım:** Kolayca genişletilebilir ve özelleştirilebilir
+4. **Açık Kaynaklı:** Akademik araştırmalara katkı
 
 ---
 
@@ -491,97 +420,73 @@ Performans Düşüşü: <1%
 ```
 Bionic_Hand_Project/
 │
-├── README.md                    # Bu dosya
-├── LICENSE                      # MIT Lisansı
-├── .gitignore                   
+├── README.md                           # Bu dosya
+├── LICENSE                             # Lisans bilgisi
 │
-├── firmware/                    # Mikrodenetleyici Yazılımları
-│   ├── arduino_nano_firmware.ino
-│   ├── esp32_main_firmware.ino
-│   └── lib/                     # Gerekli Kütüphaneler
-│       ├── sensor_reader.h
-│       ├── motor_controller.h
-│       └── wireless_comm.h
+├── firmware/                           # Mikrodenetleyici yazılımları
+│   ├── arduino_nano_firmware.ino       # Arduino Nano kodu
+│   ├── esp32_main_firmware.ino         # ESP32 kodu
+│   └── libraries/
+│       ├── RF24.h                      # Kablosuz haberleşme
+│       ├── sensor_utils.h              # Sensör işlemleri
+│       └── motor_control.h             # Servo kontrol
 │
-├── hardware/                    # Donanım Dosyaları
-│   ├── schematic.png            # Bağlantı Şeması
-│   ├── pcb_layout.png           
-│   └── parts_list.csv           # Bileşen Listesi
+├── hardware/                           # Donanım şemaları
+│   ├── images/
+│   │   ├── Şekil_3.1.png              # Biyonik el ve mekanik yapı
+│   │   ├── Şekil_3.2.png              # Servo motor yerleşimi
+│   │   ├── Şekil_3.3.png              # Verici bağlantı şeması
+│   │   ├── Şekil_3.4.png              # Verici ünitesi
+│   │   ├── Şekil_3.5.png              # Alıcı bağlantı şeması
+│   │   ├── Şekil_3.6.png              # ESP32 SPI haberleşme
+│   │   ├── Şekil_4.1.png              # Bilgisayarlı görü arayüzü
+│   │   ├── Çizelge_3.1.png            # Bileşenler tablosu
+│   │   ├── Çizelge_3.2.png            # Performans gözlemleri
+│   │   └── Çizelge_3.3.png            # Karşılaştırmalı analiz
+│   ├── schematics/
+│   │   ├── transmitter_schematic.txt   # Verici şeması
+│   │   └── receiver_schematic.txt      # Alıcı şeması
+│   └── pinout/
+│       ├── arduino_nano_pinout.txt
+│       └── esp32_pinout.txt
 │
-├── mechanical/                  # Mekanik Tasarım Dosyaları
-│   ├── cad_models/              # 3D Modeller
-│   │   ├── hand_structure.step
-│   │   ├── finger_mechanism.step
-│   │   └── servo_mount.step
-│   ├── drawings/                # Teknik Çizimler
-│   │   └── assembly_guide.pdf
-│   └── material_list.md
-│
-├── software/                    # Yardımcı Yazılımlar
-│   ├── calibration_tool.py      # Kalibrasyonu Aracı
-│   ├── monitor.py               # Sistem İzleme Aracı
-│   ├── config.json              # Konfigürasyon Dosyası
-│   └── dashboard/               # Web Arayüzü
+├── software/                           # Yardımcı yazılımlar
+│   ├── calibration_tool.py             # Kalibrasyonu aracı
+│   ├── monitor.py                      # Sistem izleme
+│   ├── config.json                     # Konfigürasyon
+│   └── dashboard/                      # Web arayüzü
 │       ├── index.html
 │       ├── styles.css
 │       └── app.js
 │
-├── documentation/               # Dokümantasyon
-│   ├── INSTALLATION.md          # Kurulum Kılavuzu
-│   ├── USER_MANUAL.md           # Kullanım Kılavuzu
-│   ├── TROUBLESHOOTING.md       # Sorun Giderme
-│   ├── API_REFERENCE.md         # API Referansı
-│   └── images/
-│       ├── system_diagram.png
-│       ├── assembly_steps/
-│       └── results/
+├── mechanical/                         # Mekanik tasarım
+│   ├── cad_models/
+│   │   ├── hand_structure.step
+│   │   ├── finger_mechanism.step
+│   │   └── servo_mount.step
+│   ├── drawings/
+│   │   └── assembly_guide.pdf
+│   └── material_list.md
 │
-├── tests/                       # Test Dosyaları
-│   ├── sensor_test.cpp
-│   ├── motor_test.cpp
-│   ├── wireless_test.cpp
-│   └── integration_test.cpp
+├── documentation/                      # Dokümantasyon
+│   ├── INSTALLATION.md                 # Detaylı kurulum
+│   ├── USER_MANUAL.md                  # Kullanım kılavuzu
+│   ├── TROUBLESHOOTING.md              # Sorun giderme
+│   ├── API_REFERENCE.md                # API referansı
+│   ├── THESIS_SUMMARY.md               # Tez özeti
+│   └── THESIS_LINK.txt                 # Tez PDF bağlantısı
 │
-└── examples/                    # Örnek Kodlar
+├── tests/                              # Test dosyaları
+│   ├── sensor_test.ino
+│   ├── motor_test.ino
+│   ├── communication_test.ino
+│   └── integration_test.ino
+│
+└── examples/                           # Örnek kodlar
     ├── basic_movement.ino
-    ├── gesture_recognition.ino
+    ├── gesture_control.ino
     └── data_logging.ino
 ```
-
----
-
-## 🚀 Teknoloji Stack'i
-
-| Katman | Teknoloji |
-|--------|-----------|
-| **Mikrodenetleyici** | Arduino Nano, ESP32 |
-| **Programlama Dili** | C++ (Arduino IDE) |
-| **Haberleşme Protokolü** | WiFi (802.11b/g/n), UART |
-| **Veri İşleme** | Analog Filtreleme, Kalibrasyonu |
-| **Arayüz** | HTML5, CSS3, JavaScript |
-| **Versiyon Kontrol** | Git |
-
----
-
-## 🔍 Sık Sorulan Sorular (FAQ)
-
-**S: Sistem ne kadar masraf ediyor?**
-A: Toplam maliyet yaklaşık 150-200 USD. Geleneksel protez sistemlerine kıyasla çok daha ekonomik.
-
-**S: Servo motorları değiştirebilir miyim?**
-A: Evet, PWM kontrol uyumlu herhangi bir servo motor kullanabilirsiniz. Kod minimal değişiklikle uyarlanabilir.
-
-**S: Sistem kaç saat dayanır?**
-A: Bataryasız çalışıyor (5V adaptör ile). USB şarj ile 24/7 çalıştırılabilir.
-
-**S: WiFi'sız kullanabilir miyim?**
-A: Bluetooth versiyonu geliştirilebilir. Arduino Nano'ya HC-05 BLE modülü ekleyerek mümkün.
-
-**S: Öğrenme eğrisi ne kadar?**
-A: Pilot test sonuçlarına göre ~5 dakika içinde öğrenilebiliyor.
-
-**S: Başka dillere mi uyarlanabilir?**
-A: Evet, tüm kodlar açık kaynaklı ve tamamen özelleştirilebilir.
 
 ---
 
@@ -589,146 +494,117 @@ A: Evet, tüm kodlar açık kaynaklı ve tamamen özelleştirilebilir.
 
 ### Sensörler Okuma Yapmıyor
 
-```
-Çözüm:
-1. Bağlantıları kontrol et (GND, 5V, Sinyal)
-2. Flex sensör dirençlerini ölç (10kΩ olmalı)
-3. Arduino Serial Monitor'da değerleri kontrol et
-4. Kalibrasyon dosyasını sıfırla
-```
+**Belirtiler:**
+- Serial Monitor'da hep sabit değer (0 veya 1023)
+- Sensör tepki vermiyor
+
+**Çözüm:**
+1. Bağlantıları kontrol et (GND, 5V, sinyal kablolarını)
+2. Multimetre ile dirençleri kontrol et (10kΩ olmalı)
+3. Flex sensörün fiziksel hasar görmediğini kontrol et
+4. Arduino Nano'nun A0-A4 pinlerini kontrol et
 
 ### Servo Motorlar Hareket Etmiyor
 
-```
-Çözüm:
-1. Güç kaynağının doğru bağlı olup olmadığını kontrol et
-2. PWM sinyalini oscilloscope ile ölç
-3. Servo bağlantılarını kontrol et
-4. Servo testini çalıştır: servo_test.ino
-```
+**Belirtiler:**
+- Motor hiç dönmüyor
+- Titreme sesine rağmen hareket yok
 
-### WiFi Bağlantısı Kesiliyor
+**Çözüm:**
+1. Güç kaynağını kontrol et (5V, 2A minimum)
+2. PWM sinyal kablolarını kontrol et
+3. Servo test kodunu çalıştır
+4. Motor beslemesini başka güç kaynağından ver
 
-```
-Çözüm:
-1. WiFi sinyalinin gücünü artır (yönü değiştir)
-2. ESP32 WiFi sürücüsünü güncelle
-3. Kanalı değiştir (1-6-11 en iyi kanallar)
+### Kablosuz Bağlantı Kopuyor
+
+**Belirtiler:**
+- Aralıklı veri kaybı
+- Sistemin donması
+
+**Çözüm:**
+1. WiFi sinyali gücünü artır (anten yönü)
+2. nRF24L01 modülünün beslemesini kontrol et
+3. Kanal numarasını değiştir
 4. Sistemi yeniden başlat
-```
+
+### Sensör Okumaları İstikrarsız
+
+**Belirtiler:**
+- Değerler hızlı değişiyor
+- Hareket yok rağmen sıçrama var
+
+**Çözüm:**
+1. Kalibrasyonu yeniden yap
+2. Filtreleme parametrelerini ayarla
+3. Kondansatörlerin iyi bağlı olduğunu kontrol et
+4. EMI gürültü kaynaklarını uzaklaştır
 
 ---
 
-## 📚 Kaynaklar
+## 🔄 Katkılar
 
-### Eğitici Materyaller
-- [Arduino Nano Dokümantasyonu](https://store.arduino.cc/products/arduino-nano)
-- [ESP32 Teknik Spesifikasyonu](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf)
-- [Flex Sensör Kılavuzu](https://www.sparkfun.com/)
+Açık kaynaklı bu proje için katkılarınız beklenmektedir:
 
-### Referans Projeler
-- Prostetik Robotik Araştırmaları
-- İnsan-Makine Arayüzü Çalışmaları
-- Kablosuz Kontrol Sistemleri
-
-### Akademik Kaynaklar
-- Robotik El Sistemleri Tasarımı
-- Sensör Teknolojileri
-- Gerçek Zamanlı Sistem Tasarımı
-
----
-
-## 👥 Katkılar
-
-Katkılar çok hoş karşılanır! Şu şekilde katkıda bulunabilirsiniz:
-
-1. Depo'yu Fork et
-2. Feature branchi oluştur (`git checkout -b feature/AmazingFeature`)
-3. Değişiklikleri Commit et (`git commit -m 'Add some AmazingFeature'`)
-4. Brancha Push et (`git push origin feature/AmazingFeature`)
-5. Pull Request aç
+1. Depo'yu Fork edin
+2. Feature branchi oluşturun (`git checkout -b feature/Improvement`)
+3. Değişiklikleri commit edin (`git commit -m 'Add improvement'`)
+4. Push edin (`git push origin feature/Improvement`)
+5. Pull Request açın
 
 ### Geliştirme Yol Haritası
 
 - [ ] Bluetooth bağlantı desteği
 - [ ] Mobil uygulama (iOS/Android)
 - [ ] Yapay zeka ile hareket tahmini
-- [ ] Kalibrasyonu otomatikleştirme
+- [ ] Otomatik kalibrasyonu
 - [ ] Batarya entegrasyonu
-- [ ] Daha fazla servo motor (tam metin)
 - [ ] Geri bildirim sensörleri
-- [ ] Bulut analitikleri
-
----
-
-## 📝 Lisans
-
-Bu proje **MIT Lisansı** altında yayınlanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
-
-```
-MIT License
-
-Copyright (c) 2025 Mehmet Torun
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-...
-```
+- [ ] Ses kontrolü
 
 ---
 
 ## 📞 İletişim
 
-- **Proje Yöneticisi**: Mehmet Torun
-- **Öğrenci No**: 24370031081
-- **Danışman**: Yunus Emre Göktepe
-- **Üniversite**: Seydişehir (Teknoloji)
-- **Bölüm**: Bilgisayar Mühendisliği
+- **Proje Yöneticisi:** Mehmet Torun
+- **Öğrenci No:** 24370031081
+- **Danışman:** Yunus Emre Göktepe (Dr. Öğr. Üyesi)
+- **Üniversite:** Seydişehir Teknoloji Üniversitesi
+- **Bölüm:** Bilgisayar Mühendisliği
+- **Tamamlama Tarihi:** Kasım 2025
 
 ---
 
 ## 🙏 Teşekkürler
 
-Bu projenin gerçekleştirilmesinde:
-- **Danışmanım Dr. Öğr. Üyesi Yunus Emre Göktepe**'ye kıymetli rehberlik ve yönlendirmeleri için
-- **Aileme ve arkadaşlarıma** süregelen destekleri için
-- **Açık kaynak topluluğuna** paylaştıkları kaynaklar için
+Bu projenin başarılı şekilde gerçekleştirilmesinde:
+
+- **Danışmanım Yunus Emre Göktepe** - Değerli rehberlik ve yönlendirmeler için
+- **Ailem ve arkadaşlarım** - Süregelen destekleri için
+- **Açık kaynak topluluğu** - Paylaştıkları araçlar ve kaynaklar için
 
 ---
 
-## 📈 Proje İstatistikleri
+## 📜 Lisans
+
+Bu proje açık kaynaklı ve akademik kullanım için özgürce erişilebilir hale getirilmiştir.
 
 ```
-Proje Süresi:     4 Hafta Yoğun Çalışma
-Toplam Kod Satırı: 3.500+
-Donanım Bileşeni:  15+
-Test Adedleri:     25+
-Dokümantasyon:     50+ sayfa
+Bu çalışma akademik ve araştırma amaçlı kullanılabilir.
+Ticari kullanım için lütfen telif hakkı sahibi ile iletişime geçiniz.
 ```
 
 ---
 
-## 🌟 Gelecek Vizyonu
+## 📚 Referans Kaynaklar
 
-Bu biyonik el sistemi, sadece bir akademik proje olmaktan öte:
-- 🏥 **Rehabilitasyon merkezlerinde** kullanılabilecek bir araç
-- 🎓 **Öğrenci projeleri** için bir referans platformu
-- 🔬 **Robotik ve biyomedikal araştırmaları** için bir temel
-- ♿ **Engelli bireyler** için daha erişilebilir bir gelecek
+Detaylı dokümantasyon, devre şemaları ve kullanım kılavuzu için `documentation/` klasörüne bakınız.
 
 ---
 
 <div align="center">
 
-**⭐ Eğer bu proje faydalı olduysa, bir yıldız vermeyi unutmayın!**
-
-Daha fazla bilgi için [Dokümantasyon](./documentation/) klasörüne bakın.
-
----
+**Proje Durum:** ✅ Aktif Geliştirme
 
 *Son Güncelleme: Kasım 2025*
 
