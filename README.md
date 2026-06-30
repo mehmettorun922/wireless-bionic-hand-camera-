@@ -82,14 +82,14 @@ Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlener
 
 ### Şekil 3.1: Alıcı Ünitesi - Ahşap Biyonik El ve Kılavuz Halka Mekanizması
 
-![Şekil 3.1 - Biyonik El Yapısı](images/Şekil_3.1.png)
+<img src="images/Şekil_3.1.png" alt="Şekil 3.1 - Biyonik El Yapısı" width="500" />
 
 *Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri*
 
 ### Tasarım Özellikleri:
 
 - **Gövde Malzemesi:** Tahta (Uygun maliyetli ve dayanıklı)
-- **Hareket Mekanizması:** Misina ipi tabanlı tendon sistemi
+- **Hareket Mekanizması:** Misina ipi tabanl�� tendon sistemi
 - **Parmak Yapısı:** El işçiliğiyle oluşturulmuş, doğal hareket yeteneği
 - **Yapısal Avantajlar:**
   - Düşük maliyet
@@ -111,7 +111,7 @@ Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve 
 
 ### Şekil 3.2: MG996R Servo Motor Yerleşimi
 
-![Şekil 3.2 - Servo Motor Yerleşimi](images/Şekil_3.2.png)
+<img src="images/Şekil_3.2.png" alt="Şekil 3.2 - Servo Motor Yerleşimi" width="500" />
 
 *MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü*
 
@@ -139,13 +139,13 @@ Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve 
 
 ### Şekil 3.3: Arduino Nano Tabanlı Verici Bağlantı Şeması
 
-![Şekil 3.3 - Verici Bağlantı Şeması](images/Şekil_3.3.png)
+<img src="images/Şekil_3.3.png" alt="Şekil 3.3 - Verici Bağlantı Şeması" width="500" />
 
 *Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması*
 
 ### Şekil 3.4: Verici Birimi
 
-![Şekil 3.4 - Verici Birimi](images/Şekil_3.4.png)
+<img src="images/Şekil_3.4.png" alt="Şekil 3.4 - Verici Birimi" width="500" />
 
 *Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)*
 
@@ -181,13 +181,13 @@ GND:    Ortak Toprak
 
 ### Şekil 3.5: ESP32 Tabanlı Alıcı Bağlantı Şeması
 
-![Şekil 3.5 - Alıcı Bağlantı Şeması](images/Şekil_3.5.png)
+<img src="images/Şekil_3.5.png" alt="Şekil 3.5 - Alıcı Bağlantı Şeması" width="500" />
 
 *ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması*
 
 ### Şekil 3.6: ESP32 SPI Haberleşme ve Alıcı Birimi
 
-![Şekil 3.6 - ESP32 SPI Haberleşme](images/Şekil_3.6.png)
+<img src="images/Şekil_3.6.png" alt="Şekil 3.6 - ESP32 SPI Haberleşme" width="500" />
 
 *ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu*
 
@@ -286,7 +286,7 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ### Şekil 4.1: Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü
 
-![Şekil 4.1 - Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
+<img src="images/Şekil_4.1.png" alt="Şekil 4.1 - Bilgisayarlı Görü Arayüzü" width="500" />
 
 *Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü*
 
@@ -438,9 +438,9 @@ import numpy                 # Matematik işlemleri
 ### Adım 2: Donanım Kurulumu
 
 Detaylı bağlantı şemaları için bakınız:
-- ![Şekil 3.3](images/Şekil_3.3.png) - Verici bağlantısı
-- ![Şekil 3.5](images/Şekil_3.5.png) - Alıcı bağlantısı
-- ![Şekil 3.6](images/Şekil_3.6.png) - SPI haberleşme
+- <img src="images/Şekil_3.3.png" alt="Şekil 3.3" width="50" style="display:inline" /> Verici bağlantısı
+- <img src="images/Şekil_3.5.png" alt="Şekil 3.5" width="50" style="display:inline" /> Alıcı bağlantısı
+- <img src="images/Şekil_3.6.png" alt="Şekil 3.6" width="50" style="display:inline" /> SPI haberleşme
 
 ### Adım 3: Firmware Yükleme
 
@@ -473,7 +473,7 @@ Detaylı bağlantı şemaları için bakınız:
 
 ### Çizelge 3.2: Sistem Performans Gözlemleri
 
-![Çizelge 3.2 - Performans Gözlemleri](images/Çizelge_3.2.png)
+<img src="images/Çizelge_3.2.png" alt="Çizelge 3.2 - Performans Gözlemleri" width="500" />
 
 *Sistem Performans Gözlemleri*
 
@@ -500,7 +500,7 @@ Detaylı bağlantı şemaları için bakınız:
 
 ### Kontrol ve Tepki Analizi
 
-![Şekil 4.1 - Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
+<img src="images/Şekil_4.1.png" alt="Şekil 4.1 - Bilgisayarlı Görü Arayüzü" width="500" />
 
 *Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü (Alternatif Yaklaşım)*
 
@@ -535,7 +535,7 @@ Detaylı bağlantı şemaları için bakınız:
 
 ### Çizelge 3.3: Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması
 
-![Çizelge 3.3 - Karşılaştırmalı Analiz](images/Çizelge_3.3.png)
+<img src="images/Çizelge_3.3.png" alt="Çizelge 3.3 - Karşılaştırmalı Analiz" width="500" />
 
 *Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması*
 
