@@ -94,7 +94,8 @@ Sistem üç temel katmandan oluşmaktadır:
 
 Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlenerek geliştirilmiştir.
 
-**Bkz:** `images/Şekil_3.1.png` - Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri
+![Şekil 3.1 - Alıcı Ünitesi Mekanik Yapı](images/Şekil_3.1.png)
+*Alıcı Ünitesi: Ahşap Biyonik El ve Kılavuz Halka Mekanizmasının İç, Dış ve Yan Görünümleri*
 
 ### Tasarım Özellikleri:
 
@@ -119,7 +120,8 @@ Mekanik tasarım, balıkçılıkta kullanılan misina mekanizmasından esinlener
 
 Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve verimlilik sağlayacak şekilde tasarlanmıştır.
 
-**Bkz:** `images/Şekil_3.2.png` - MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü
+![Şekil 3.2 - Servo Motor Yerleşimi](images/Şekil_3.2.png)
+*MG996R Servo Motor Ünitesinin Kontrol Plakası Üzerindeki Yerleşimi ve Hareket İletim Mekanizmasının Genel Görünümü*
 
 ### Motor Özellikleri:
 
@@ -143,9 +145,11 @@ Servo motorların yerleşimi ve hareket iletim mekanizması, optimal kontrol ve 
 
 ### Verici Ünitesi (Arduino Nano ve Flex Sensörler)
 
-**Bkz:** `images/Şekil_3.3.png` - Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması
+![Şekil 3.3 - Verici Bağlantı Şeması](images/Şekil_3.3.png)
+*Arduino Nano Tabanlı Verici Biriminin Flex Sensörler ve nRF24L01 Modülü ile Bağlantı Şeması*
 
-**Bkz:** `images/Şekil_3.4.png` - Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)
+![Şekil 3.4 - Verici Ünitesi](images/Şekil_3.4.png)
+*Verici Birimi (Arduino Nano, nRF24L01 Modülü ve Flex Sensörler)*
 
 #### Kullanılan Bileşenler:
 
@@ -177,9 +181,11 @@ GND:    Ortak Toprak
 
 ### Alıcı Ünitesi (ESP32 ve Servo Motorlar)
 
-**Bkz:** `images/Şekil_3.5.png` - ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması
+![Şekil 3.5 - Alıcı Bağlantı Şeması](images/Şekil_3.5.png)
+*ESP32 Tabanlı Alıcı Biriminin Servo Motorlar ve nRF24L01 Modülü ile Bağlantı Şeması*
 
-**Bkz:** `images/Şekil_3.6.png` - ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu
+![Şekil 3.6 - ESP32 SPI Haberleşme](images/Şekil_3.6.png)
+*ESP32 Mikrodenetleyici ve nRF24L01 Modülünün Arasındaki SPI Haberleşme Arayüzü ve Kablosuz Alıcı Birimi Donanım Entegrasyonu*
 
 #### Kullanılan Bileşenler:
 
@@ -274,7 +280,8 @@ Giriş: Flex Sensör Değerleri (0-1023)
 
 ## 📹 Kamera Tabanlı Bilgisayarlı Görü ile Temassız Kontrol (Alternatif Yaklaşım)
 
-**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü
+![Şekil 4.1 - Python Bilgisayarlı Görü Arayüzü](images/Şekil_4.1.png)
+*Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü*
 
 ### Genel Tanım
 
@@ -457,7 +464,8 @@ Detaylı bağlantı şemaları için bkz:
 
 ## 📊 Sistem Performansı
 
-**Bkz:** `images/Çizelge_3.2.png` - Sistem Performans Gözlemleri
+![Çizelge 3.2 - Sistem Performans Gözlemleri](images/Çizelge_3.2.png)
+*Sistem Performans Gözlemleri*
 
 ### Temel Performans Metrikleri
 
@@ -482,7 +490,7 @@ Detaylı bağlantı şemaları için bkz:
 
 ### Kontrol ve Tepki Analizi
 
-**Bkz:** `images/Şekil_4.1.png` - Geliştirilen Python Tabanlı Bilgisayarlı Görü Arayüzü (Alternatif Yaklaşım)
+Geliştirilen sistem kapsamlı testlerden geçirilmiştir ve başarılı sonuçlar elde edilmiştir.
 
 ### Deneysel Veriler
 
@@ -513,7 +521,8 @@ Detaylı bağlantı şemaları için bkz:
 
 ## 📈 Karşılaştırmalı Analiz
 
-**Bkz:** `images/Çizelge_3.3.png` - Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması
+![Çizelge 3.3 - Sistem Karşılaştırması](images/Çizelge_3.3.png)
+*Geliştirilen Sistem ile Literatürdeki Sistemlerin Karşılaştırılması*
 
 ### Sistem Avantajları
 
@@ -538,7 +547,7 @@ Detaylı bağlantı şemaları için bkz:
 ## 📁 Proje Yapısı
 
 ```
-Bionic_Hand_Project/
+wireless-bionic-hand-camera/
 │
 ├── README.md                           # Bu dosya
 ├── LICENSE                             # Lisans bilgisi
@@ -549,15 +558,14 @@ Bionic_Hand_Project/
 │   ├── hand_gesture_recognition.py     # El hareket tanıma
 │   └── config.json                     # Konfigürasyon
 │
-├── images/                             # Proje görselleri
-│   ├── Şekil_3.1.png                  # Biyonik el ve mekanik yapı
+├── images/                             # 📸 Proje görselleri
+│   ├── Şekil_3.1.png                  # Biyonik el mekanik yapı
 │   ├── Şekil_3.2.png                  # Servo motor yerleşimi
 │   ├── Şekil_3.3.png                  # Verici bağlantı şeması
 │   ├── Şekil_3.4.png                  # Verici ünitesi
 │   ├── Şekil_3.5.png                  # Alıcı bağlantı şeması
 │   ├── Şekil_3.6.png                  # ESP32 SPI haberleşme
 │   ├── Şekil_4.1.png                  # Bilgisayarlı görü arayüzü
-│   ├── Çizelge_3.1.png                # Bileşenler tablosu
 │   ├── Çizelge_3.2.png                # Performans gözlemleri
 │   └── Çizelge_3.3.png                # Karşılaştırmalı analiz
 │
